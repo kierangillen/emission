@@ -1,4 +1,4 @@
-import { Theme } from "@artsy/palette"
+import { Box, Separator, Theme } from "@artsy/palette"
 import { Fair_fair } from "__generated__/Fair_fair.graphql"
 import React from "react"
 import { FlatList, ViewProperties } from "react-native"
@@ -6,6 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 
 import { LocationMapContainer as LocationMap } from "lib/Components/LocationMap"
 import { FairHeaderContainer as FairHeader } from "./Components/FairHeader"
+import { HoursCollapsible } from "./Components/HoursCollapsible"
 
 interface Props extends ViewProperties {
   fair: Fair_fair
@@ -21,6 +22,13 @@ export class Fair extends React.Component<Props> {
     const sections = []
 
     sections.push({
+      type: "hours",
+      data: {
+        hours: fair.hours,
+      },
+    })
+
+    sections.push({
       type: "location",
       data: {
         location: fair.location,
@@ -31,6 +39,23 @@ export class Fair extends React.Component<Props> {
     this.setState({ sections })
   }
 
+  renderItemSeparator = () => (
+    <Box py={2} px={2}>
+      <Separator />
+    </Box>
+  )
+
+  renderItem = ({ item: { data, type } }) => {
+    switch (type) {
+      case "location":
+        return <LocationMap {...data} />
+      case "hours":
+        return <HoursCollapsible {...data} />
+      default:
+        return null
+    }
+  }
+
   render() {
     const { fair } = this.props
 
@@ -38,15 +63,15 @@ export class Fair extends React.Component<Props> {
       <Theme>
         <FlatList
           data={this.state.sections}
-          ListHeaderComponent={<FairHeader fair={fair} />}
-          renderItem={({ item: { data, type } }) => {
-            switch (type) {
-              case "location":
-                return <LocationMap {...data} />
-              default:
-                return null
-            }
-          }}
+          ListHeaderComponent={
+            <>
+              <FairHeader fair={fair} />
+              {this.renderItemSeparator()}
+            </>
+          }
+          renderItem={item => <Box px={2}>{this.renderItem(item)}</Box>}
+          ItemSeparatorComponent={this.renderItemSeparator}
+          keyExtractor={(item, index) => item.type + String(index)}
         />
       </Theme>
     )
@@ -59,6 +84,7 @@ export default createFragmentContainer(
     fragment Fair_fair on Fair {
       ...FairHeader_fair
 
+      hours
       location {
         ...LocationMap_location
       }

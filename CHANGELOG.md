@@ -21,6 +21,7 @@
 - Updates Show detail view styles - luc
 - Updates @artsy/palette (2.21.1) - javamonn
 - Refactor More Shows section - luc
+- Add HoursCollapsible to Fair detail view - javamonn
 
 ### 1.7.4
 

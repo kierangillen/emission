@@ -6,6 +6,7 @@ import { LocationMap_location$ref } from "./LocationMap_location.graphql";
 declare const _Fair_fair$ref: unique symbol;
 export type Fair_fair$ref = typeof _Fair_fair$ref;
 export type Fair_fair = {
+    readonly hours: string | null;
     readonly location: ({
         readonly " $fragmentRefs": LocationMap_location$ref;
     }) | null;
@@ -39,6 +40,13 @@ return {
       "kind": "FragmentSpread",
       "name": "FairHeader_fair",
       "args": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "hours",
+      "args": null,
+      "storageKey": null
     },
     {
       "kind": "LinkedField",
@@ -91,5 +99,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'f0b8b23018e349d3dcff17edf15d1c96';
+(node as any).hash = '0f73c2db20235712483f9bbf6b967a61';
 export default node;
