@@ -1,5 +1,6 @@
 import { Box, Flex, Sans, space } from "@artsy/palette"
 import { WhiteButton } from "lib/Components/Buttons"
+import { Markdown } from "lib/Components/Markdown"
 import React from "react"
 import styled from "styled-components/native"
 
@@ -32,7 +33,7 @@ export class HoursCollapsible extends React.Component<Props, State> {
           <Sans size="4">Hours</Sans>
           <Button text={isExpanded ? "Tap to Close" : "Tap to Expand"} onPress={this.handleToggleIsExpanded} />
         </Flex>
-        {isExpanded && <Sans size="3">{hours}</Sans>}
+        {isExpanded && <Markdown size="3">{hours}</Markdown>}
       </Box>
     )
   }
