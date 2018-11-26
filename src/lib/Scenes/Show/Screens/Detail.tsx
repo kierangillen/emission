@@ -4,8 +4,8 @@ import React from "react"
 import { FlatList, ViewProperties } from "react-native"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { LocationMapContainer as LocationMap } from "lib/Components/LocationMap"
 import { HoursCollapsible } from "lib/Components/HoursCollapsible"
+import { LocationMapContainer as LocationMap } from "lib/Components/LocationMap"
 import { ArtistsContainer as Artists } from "../Components/Artists"
 import { ArtworksContainer as Artworks } from "../Components/Artworks"
 import { ShowHeaderContainer as ShowHeader } from "../Components/ShowHeader"
@@ -108,7 +108,7 @@ export class Detail extends React.Component<Props, State> {
             />
           </>
         }
-        ItemSeparatorComponent={this.renderItemSeparator}
+        // ItemSeparatorComponent={this.renderItemSeparator}
         renderItem={item => <Box px={2}>{this.renderItem(item)}</Box>}
         keyExtractor={(item, index) => item.type + String(index)}
       />

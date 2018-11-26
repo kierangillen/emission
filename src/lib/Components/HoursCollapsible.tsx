@@ -1,15 +1,11 @@
-import { Box, Flex, Sans, Spacer, space } from "@artsy/palette"
-import { WhiteButton } from "lib/Components/Buttons"
+import { Box, Flex, Sans, Serif } from "@artsy/palette"
 import { Markdown } from "lib/Components/Markdown"
-import React from "react"
-import styled from "styled-components/native"
-import { isString, isArray, uniqBy } from "lodash"
+import { isArray, isString, uniqBy } from "lodash"
 import moment from "moment"
+import React from "react"
+import { Image, TouchableWithoutFeedback } from "react-native"
 
-const Button = styled(WhiteButton)`
-  padding-left: ${space(2)};
-  padding-right: ${space(2)};
-`
+const chevron: ImageURISource = require("../../../images/chevron.png")
 
 interface Props {
   hours: string | Array<{ day_of_week: string; start_time: number; end_time: number }>
@@ -22,8 +18,8 @@ interface State {
 export function formatTime(time) {
   const hourMoment = moment().hour(time / 60 / 60)
   const minutesMoment = moment().minutes(time / 60)
-  const pm = hourMoment.hour() > 12 ? "pm" : ""
-  return hourMoment.format("h") + (minutesMoment.format("mm") === "00" ? "" : minutesMoment.format(":mm")) + pm
+  const amPm = hourMoment.hour() >= 12 ? "pm" : "am"
+  return hourMoment.format("h") + (minutesMoment.format("mm") === "00" ? "" : minutesMoment.format(":mm")) + amPm
 }
 
 export class HoursCollapsible extends React.Component<Props, State> {
@@ -38,31 +34,57 @@ export class HoursCollapsible extends React.Component<Props, State> {
     if (isString(hours)) {
       return <Markdown size="3">{hours}</Markdown>
     } else if (isArray(hours)) {
-      return uniqBy(hours, "day_of_week").map(({ start_time, end_time, day_of_week }, idx, arr) => {
+      return uniqBy(hours, "day_of_week").map(({ start_time, end_time, day_of_week }) => {
         return (
-          <>
+          <Box key={day_of_week}>
             <Sans size="3" weight="medium">
               {day_of_week}
             </Sans>
-            <Sans size="3">
-              {formatTime(start_time)} - {formatTime(end_time)}
-            </Sans>
-            {idx < arr.length - 1 && <Spacer m={1} />}
-          </>
+            <Serif size="3" color="black60">
+              {formatTime(start_time)}–{formatTime(end_time)}
+            </Serif>
+          </Box>
         )
       })
+    }
+  }
+
+  returnChevron(isExpanded) {
+    if (isExpanded) {
+      return (
+        <Image
+          style={{
+            height: 8,
+            width: 15,
+            alignSelf: "center",
+            resizeMode: "center",
+            opacity: 0.3,
+            transform: [{ rotate: "180deg" }],
+          }}
+          source={chevron}
+        />
+      )
+    } else {
+      return (
+        <Image
+          style={{ height: 8, width: 15, alignSelf: "center", resizeMode: "center", opacity: 0.3 }}
+          source={chevron}
+        />
+      )
     }
   }
 
   render() {
     const { isExpanded } = this.state
     return (
-      <Box>
-        <Flex justifyContent="space-between" alignItems="center" flexDirection="row">
-          <Sans size="4">Hours</Sans>
-          <Button text={isExpanded ? "Tap to Close" : "Tap to Expand"} onPress={this.handleToggleIsExpanded} />
-        </Flex>
-        {isExpanded && this.renderHours()}
+      <Box mt={2}>
+        <TouchableWithoutFeedback onPress={this.handleToggleIsExpanded}>
+          <Flex justifyContent="space-between" alignItems="center" flexDirection="row" mb={2}>
+            <Sans size="4">Hours</Sans>
+            {this.returnChevron(isExpanded)}
+          </Flex>
+        </TouchableWithoutFeedback>
+        {isExpanded && <Box mb={2}>{this.renderHours()}</Box>}
       </Box>
     )
   }
