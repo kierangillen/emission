@@ -20,6 +20,11 @@ export type Detail_show = {
         readonly city: string | null;
         readonly state: string | null;
         readonly postal_code: string | null;
+        readonly day_schedules: ReadonlyArray<({
+            readonly start_time: number | null;
+            readonly end_time: number | null;
+            readonly day_of_week: string | null;
+        }) | null> | null;
         readonly " $fragmentRefs": LocationMap_location$ref;
     }) | null;
     readonly images: ReadonlyArray<({
@@ -129,6 +134,38 @@ return {
           "args": null,
           "storageKey": null
         },
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "day_schedules",
+          "storageKey": null,
+          "args": null,
+          "concreteType": "DaySchedule",
+          "plural": true,
+          "selections": [
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "start_time",
+              "args": null,
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "end_time",
+              "args": null,
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "day_of_week",
+              "args": null,
+              "storageKey": null
+            }
+          ]
+        },
         v2,
         {
           "kind": "FragmentSpread",
@@ -234,5 +271,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'f2594b4ad38e0b428de5aa2a24356569';
+(node as any).hash = '8333b1d3f46c0d564ee96863115e131c';
 export default node;

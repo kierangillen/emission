@@ -6,7 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 
 import { LocationMapContainer as LocationMap } from "lib/Components/LocationMap"
 import { FairHeaderContainer as FairHeader } from "./Components/FairHeader"
-import { HoursCollapsible } from "./Components/HoursCollapsible"
+import { HoursCollapsible } from "lib/Components/HoursCollapsible"
 
 interface Props extends ViewProperties {
   fair: Fair_fair
@@ -48,7 +48,7 @@ export class Fair extends React.Component<Props> {
   renderItem = ({ item: { data, type } }) => {
     switch (type) {
       case "location":
-        return <LocationMap {...data} />
+        return <LocationMap partnerType="Fair" {...data} />
       case "hours":
         return <HoursCollapsible {...data} />
       default:

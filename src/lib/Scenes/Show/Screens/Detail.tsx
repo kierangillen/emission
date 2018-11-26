@@ -5,6 +5,7 @@ import { FlatList, ViewProperties } from "react-native"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { LocationMapContainer as LocationMap } from "lib/Components/LocationMap"
+import { HoursCollapsible } from "lib/Components/HoursCollapsible"
 import { ArtistsContainer as Artists } from "../Components/Artists"
 import { ArtworksContainer as Artworks } from "../Components/Artworks"
 import { ShowHeaderContainer as ShowHeader } from "../Components/ShowHeader"
@@ -37,6 +38,13 @@ export class Detail extends React.Component<Props, State> {
         location: show.location,
         partnerName: show.partner.name,
         partnerType: show.partner.type,
+      },
+    })
+
+    sections.push({
+      type: "hours",
+      data: {
+        hours: show.location.day_schedules,
       },
     })
 
@@ -74,6 +82,8 @@ export class Detail extends React.Component<Props, State> {
         return <Artists show={data} />
       case "shows":
         return <Shows show={data} />
+      case "hours":
+        return <HoursCollapsible {...data} />
       default:
         return null
     }
@@ -121,6 +131,11 @@ export const DetailContainer = createFragmentContainer(
         city
         state
         postal_code
+        day_schedules {
+          start_time
+          end_time
+          day_of_week
+        }
       }
       images {
         id
