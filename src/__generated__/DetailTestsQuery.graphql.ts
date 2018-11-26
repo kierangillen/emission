@@ -35,6 +35,11 @@ fragment Detail_show on Show {
     city
     state
     postal_code
+    day_schedules {
+      start_time
+      end_time
+      day_of_week
+    }
     __id
     ...LocationMap_location
   }
@@ -325,7 +330,7 @@ return {
   "kind": "Request",
   "operationKind": "query",
   "name": "DetailTestsQuery",
-  "id": "b3870d706541df3d424acc4c5decaff4",
+  "id": "df050c9dfc22d7d149f2e9f55b1f0a1b",
   "text": null,
   "metadata": {},
   "fragment": {
@@ -417,33 +422,6 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              v1,
-              v5,
-              {
-                "kind": "LinkedField",
-                "alias": null,
-                "name": "coordinates",
-                "storageKey": null,
-                "args": null,
-                "concreteType": "LatLng",
-                "plural": false,
-                "selections": [
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "name": "lat",
-                    "args": null,
-                    "storageKey": null
-                  },
-                  {
-                    "kind": "ScalarField",
-                    "alias": null,
-                    "name": "lng",
-                    "args": null,
-                    "storageKey": null
-                  }
-                ]
-              },
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -471,6 +449,33 @@ return {
                     "kind": "ScalarField",
                     "alias": null,
                     "name": "day_of_week",
+                    "args": null,
+                    "storageKey": null
+                  }
+                ]
+              },
+              v1,
+              v5,
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "coordinates",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "LatLng",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "lat",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "lng",
                     "args": null,
                     "storageKey": null
                   }
