@@ -66,11 +66,17 @@ export class Detail extends React.Component<Props, State> {
     this.setState({ sections })
   }
 
-  renderItemSeparator = () => (
-    <Box py={2} px={2}>
-      <Separator />
-    </Box>
-  )
+  renderItemSeparator = item => {
+    if (item && item.leadingItem.type === "location") {
+      return <Box />
+    } else {
+      return (
+        <Box py={2} px={2}>
+          <Separator />
+        </Box>
+      )
+    }
+  }
 
   renderItem = ({ item: { data, type } }) => {
     switch (type) {
@@ -108,7 +114,7 @@ export class Detail extends React.Component<Props, State> {
             />
           </>
         }
-        // ItemSeparatorComponent={this.renderItemSeparator}
+        ItemSeparatorComponent={item => this.renderItemSeparator(item)}
         renderItem={item => <Box px={2}>{this.renderItem(item)}</Box>}
         keyExtractor={(item, index) => item.type + String(index)}
       />
