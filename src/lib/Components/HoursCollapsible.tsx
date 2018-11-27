@@ -1,4 +1,4 @@
-import { Box, Flex, Sans, Serif } from "@artsy/palette"
+import { Box, Collapse, Flex, Sans, Serif } from "@artsy/palette"
 import { Markdown } from "lib/Components/Markdown"
 import { isArray, isString, uniqBy } from "lodash"
 import moment from "moment"
@@ -79,12 +79,16 @@ export class HoursCollapsible extends React.Component<Props, State> {
     return (
       <Box mt={2}>
         <TouchableWithoutFeedback onPress={this.handleToggleIsExpanded}>
-          <Flex justifyContent="space-between" alignItems="center" flexDirection="row" mb={2}>
+          <Flex justifyContent="space-between" alignItems="center" flexDirection="row">
             <Sans size="4">Hours</Sans>
             {this.returnChevron(isExpanded)}
           </Flex>
         </TouchableWithoutFeedback>
-        {isExpanded && <Box mb={2}>{this.renderHours()}</Box>}
+        <Collapse open={isExpanded}>
+          <Box mt={2} mb={2}>
+            {this.renderHours()}
+          </Box>
+        </Collapse>
       </Box>
     )
   }
